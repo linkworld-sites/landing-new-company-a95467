@@ -100,9 +100,9 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.85, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
         >
-          Roasted to order.{' '}
+          Roasted to order —{' '}
           <br className="hidden sm:block" />
-          <span className="text-toasted-amber">Never from a shelf.</span>
+          <span className="text-toasted-amber">never from a shelf.</span>
         </motion.h1>
 
         {/* Supporting copy */}
