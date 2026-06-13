@@ -156,6 +156,16 @@ export default function Hero() {
             →
           </motion.span>
         </motion.a>
+
+        {/* Free shipping note */}
+        <motion.p
+          className="font-label text-parchment/50 text-[10px] mt-3 tracking-wide"
+          initial={prefersReducedMotion ? {} : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 1.1, ease: [0.22, 1, 0.36, 1] }}
+        >
+          Free shipping over 30 EUR
+        </motion.p>
       </div>
 
       {/* Trust bar — 3 icons, pinned to the bottom of the hero */}
