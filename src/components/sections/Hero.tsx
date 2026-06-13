@@ -3,8 +3,53 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import Image from 'next/image';
+import { track } from '@/lib/funnel';
 
-const logotype = ['G', 'o', 'l', 'd', 'e', 'n', ' ', 'B', 'a', 't', 'c', 'h'];
+const trustItems = [
+  {
+    label: 'Roasted & shipped within 48 hrs',
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.5" />
+        <path
+          d="M12 7v5.25l3 1.75"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    ),
+  },
+  {
+    label: 'Free shipping on orders over £40',
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path
+          d="M3 7l9-4 9 4M3 7l9 4m-9-4v9l9 4m0-13l9 4m-9-4v13m9-13v9l-9 4"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    ),
+  },
+  {
+    label: 'Pause or cancel anytime',
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path
+          d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    ),
+  },
+];
 
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
@@ -16,7 +61,6 @@ export default function Hero() {
   });
 
   const imageY = useTransform(scrollYProgress, [0, 1], ['0%', '-12%']);
-  const logoOpacity = useTransform(scrollYProgress, [0, 0.3], [0.3, 0.6]);
 
   return (
     <section ref={ref} className="relative h-screen w-full overflow-hidden">
@@ -33,60 +77,112 @@ export default function Hero() {
           className="object-cover object-center"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-molasses/10" />
+        <div className="absolute inset-0 bg-molasses/58" />
       </motion.div>
 
-      {/* Centered logotype — burns through at low opacity */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <motion.div
-          style={prefersReducedMotion ? { opacity: 0.3 } : { opacity: logoOpacity }}
-          className="text-center"
+      {/* Hero content — centered, padded above trust bar */}
+      <div className="absolute inset-0 flex flex-col items-center justify-center px-6 pb-24 text-center">
+        {/* Brand label */}
+        <motion.span
+          className="font-label text-toasted-amber text-[11px] mb-5"
+          initial={prefersReducedMotion ? {} : { opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
         >
-          <div
-            className="font-playfair italic text-parchment select-none"
-            style={{ fontSize: 'clamp(3.5rem, 10vw, 9rem)', letterSpacing: '-0.02em' }}
-            aria-label="Golden Batch"
-          >
-            {logotype.map((char, i) => (
-              <motion.span
-                key={i}
-                initial={prefersReducedMotion ? {} : { opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.6,
-                  delay: 0.1 + i * 0.06,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-                className="inline-block"
-              >
-                {char}
-              </motion.span>
-            ))}
-          </div>
-          <motion.p
-            className="font-label text-parchment/80 text-xs mt-4"
-            initial={prefersReducedMotion ? {} : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.9 }}
-          >
-            Small-Batch &nbsp;·&nbsp; Limited Run &nbsp;·&nbsp; Seasonal
-          </motion.p>
+          Golden Batch &nbsp;·&nbsp; Small-Batch Artisan Granola
+        </motion.span>
+
+        {/* Main headline */}
+        <motion.h1
+          className="font-playfair italic text-parchment leading-[1.05] max-w-4xl"
+          style={{ fontSize: 'clamp(2.8rem, 7.5vw, 7rem)', letterSpacing: '-0.02em' }}
+          initial={prefersReducedMotion ? {} : { opacity: 0, y: 28 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.85, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+        >
+          Roasted to order.{' '}
+          <br className="hidden sm:block" />
+          <span className="text-toasted-amber">Never from a shelf.</span>
+        </motion.h1>
+
+        {/* Supporting copy */}
+        <motion.p
+          className="font-dm-sans text-parchment/75 text-base md:text-lg mt-6 max-w-xl leading-relaxed"
+          initial={prefersReducedMotion ? {} : { opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
+        >
+          Each batch fires fresh in our Cotswolds kitchen, ships within 48 hours, and rotates
+          with the season — a genuinely new flavour every delivery.
+        </motion.p>
+
+        {/* Savings callout pill */}
+        <motion.div
+          className="mt-7 inline-flex items-center gap-2.5 border border-toasted-amber/50 bg-molasses/40 backdrop-blur-sm px-5 py-2.5"
+          initial={prefersReducedMotion ? {} : { opacity: 0, scale: 0.93 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.55, delay: 0.72, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <span className="block w-1.5 h-1.5 rounded-full bg-toasted-amber shrink-0" />
+          <span className="font-label text-parchment text-[11px]">
+            Subscribe &amp; save 15% — pause or cancel anytime
+          </span>
         </motion.div>
+
+        {/* Primary CTA — solid amber, high-contrast */}
+        <motion.a
+          href="#subscribe"
+          className="relative mt-8 inline-flex items-center gap-3 bg-toasted-amber text-parchment font-dm-sans font-medium text-sm tracking-label uppercase px-10 py-4 overflow-hidden"
+          initial={prefersReducedMotion ? {} : { opacity: 0, y: 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
+          whileTap={{ scale: 0.97 }}
+          onClick={() => track('intent')}
+        >
+          {!prefersReducedMotion && (
+            <motion.span
+              className="absolute inset-0 bg-molasses origin-left"
+              initial={{ scaleX: 0 }}
+              whileHover={{ scaleX: 1 }}
+              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            />
+          )}
+          <span className="relative z-10">Start My Subscription</span>
+          <motion.span
+            className="relative z-10 text-base leading-none"
+            animate={prefersReducedMotion ? {} : { x: [0, 5, 0] }}
+            transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut', delay: 2.2 }}
+          >
+            →
+          </motion.span>
+        </motion.a>
       </div>
 
-      {/* Scroll cue */}
+      {/* Trust bar — 3 icons, pinned to the bottom of the hero */}
       <motion.div
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.6, duration: 0.8 }}
+        className="absolute bottom-0 inset-x-0 border-t border-parchment/12 bg-molasses/52 backdrop-blur-sm"
+        initial={prefersReducedMotion ? {} : { opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, delay: 1.25, ease: [0.22, 1, 0.36, 1] }}
       >
-        <span className="font-label text-parchment/60 text-[10px]">Scroll</span>
-        <motion.div
-          className="w-px h-10 bg-parchment/40 origin-top"
-          animate={prefersReducedMotion ? {} : { scaleY: [1, 0.3, 1] }}
-          transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
-        />
+        <div className="mx-auto max-w-3xl px-6 py-4 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-0 sm:divide-x sm:divide-parchment/15">
+          {trustItems.map((item, i) => (
+            <motion.div
+              key={i}
+              className="flex items-center gap-2.5 text-parchment/70 sm:px-8 first:pl-0 last:pr-0"
+              initial={prefersReducedMotion ? {} : { opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.5,
+                delay: 1.35 + i * 0.1,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+            >
+              <span className="text-toasted-amber shrink-0">{item.icon}</span>
+              <span className="font-label text-[10px] whitespace-nowrap">{item.label}</span>
+            </motion.div>
+          ))}
+        </div>
       </motion.div>
     </section>
   );
