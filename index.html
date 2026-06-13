@@ -1,0 +1,1596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><style id='brand'>:root{
+  --bg:#0b0b0c; --surface:#141417; --surface-2:#1c1c21;
+  --fg:#f5f5f7; --fg-muted:#a1a1aa; --border:#26262b;
+  --accent:#3b82f6; --accent-fg:#fff; --radius:14px; --maxw:1100px;
+  --font:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--bg);color:var(--fg);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.container{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+.section{padding:96px 0}
+.hero{padding:140px 0 90px;text-align:center}
+h1{font-size:clamp(2.5rem,6vw,4.5rem);line-height:1.05;letter-spacing:-.02em}
+h2{font-size:clamp(1.8rem,4vw,2.8rem);letter-spacing:-.01em}
+.muted{color:var(--fg-muted)}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:var(--accent-fg);padding:14px 28px;border-radius:var(--radius);font-weight:600;text-decoration:none;border:0;cursor:pointer;transition:transform .15s ease,opacity .15s ease}
+.btn:hover{transform:translateY(-2px);opacity:.92}
+.btn-ghost{background:transparent;color:var(--fg);border:1px solid var(--border)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px}
+.grid{display:grid;gap:24px}
+@media(max-width:640px){.section{padding:64px 0}.hero{padding:96px 0 64px}}
+</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Golden Batch — Artisan Granola Subscriptions</title>
+<style>
+  /* ── Override accent to a warm golden tone ── */
+  :root {
+    --bg: #fdf8f0;
+    --surface: #fff9f0;
+    --fg: #2c1a0e;
+    --fg-muted: #7a5c3e;
+    --accent: #c8861a;
+    --accent-light: #f5c842;
+    --accent-dark: #9d620e;
+    --border: #e8d5b5;
+    --radius: 14px;
+    --gold-gradient: linear-gradient(135deg, #c8861a 0%, #f5c842 50%, #c8861a 100%);
+    --warm-gradient: linear-gradient(160deg, #fdf3df 0%, #fef9f0 60%, #fff5e0 100%);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Georgia', serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── Nav ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(253, 248, 240, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 68px;
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+  }
+
+  .nav-logo-mark {
+    width: 38px;
+    height: 38px;
+    background: var(--gold-gradient);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    box-shadow: 0 2px 8px rgba(200,134,26,0.35);
+  }
+
+  .nav-logo-text {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: var(--fg);
+    letter-spacing: 0.02em;
+  }
+
+  .nav-logo-text span {
+    color: var(--accent);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--fg-muted);
+    text-decoration: none;
+    font-family: sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  .nav-cta {
+    background: var(--gold-gradient);
+    color: #fff;
+    border: none;
+    padding: 0.55rem 1.4rem;
+    border-radius: 50px;
+    font-family: sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 0.04em;
+    box-shadow: 0 3px 12px rgba(200,134,26,0.4);
+    text-decoration: none;
+    transition: transform 0.18s, box-shadow 0.18s;
+  }
+
+  .nav-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(200,134,26,0.45);
+  }
+
+  /* ── Hero ── */
+  .hero-section {
+    min-height: 92vh;
+    background: var(--warm-gradient);
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: 5rem 2rem 4rem;
+  }
+
+  .hero-bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .hero-bg-circle-1 {
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(245,200,66,0.18) 0%, transparent 70%);
+    top: -100px; right: -100px;
+  }
+
+  .hero-bg-circle-2 {
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(200,134,26,0.12) 0%, transparent 70%);
+    bottom: -80px; left: -60px;
+  }
+
+  .grain-texture {
+    position: absolute;
+    inset: 0;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    width: 100%;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(200,134,26,0.12);
+    border: 1px solid rgba(200,134,26,0.3);
+    color: var(--accent-dark);
+    padding: 0.35rem 1rem;
+    border-radius: 50px;
+    font-family: sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-headline {
+    font-size: clamp(2.6rem, 5vw, 4rem);
+    line-height: 1.18;
+    font-weight: bold;
+    color: var(--fg);
+    margin-bottom: 1.4rem;
+  }
+
+  .hero-headline .gold {
+    background: var(--gold-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-subheadline {
+    font-size: 1.15rem;
+    color: var(--fg-muted);
+    margin-bottom: 2.4rem;
+    font-family: sans-serif;
+    font-weight: 400;
+    max-width: 480px;
+    line-height: 1.75;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .btn-gold {
+    background: var(--gold-gradient);
+    color: #fff;
+    border: none;
+    padding: 0.9rem 2.2rem;
+    border-radius: 50px;
+    font-family: sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 0.03em;
+    box-shadow: 0 5px 20px rgba(200,134,26,0.4);
+    text-decoration: none;
+    display: inline-block;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .btn-gold:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(200,134,26,0.5);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--accent-dark);
+    border: 2px solid var(--accent);
+    padding: 0.85rem 2rem;
+    border-radius: 50px;
+    font-family: sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .btn-outline:hover {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  .hero-trust {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  .trust-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: sans-serif;
+    font-size: 0.85rem;
+    color: var(--fg-muted);
+    font-weight: 500;
+  }
+
+  .trust-icon {
+    font-size: 1.1rem;
+  }
+
+  /* Hero Visual */
+  .hero-visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  .hero-bowl {
+    width: 340px;
+    height: 340px;
+    background: var(--gold-gradient);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9rem;
+    box-shadow:
+      0 20px 60px rgba(200,134,26,0.3),
+      0 0 0 20px rgba(200,134,26,0.07),
+      0 0 0 40px rgba(200,134,26,0.04);
+    animation: float 4s ease-in-out infinite;
+    position: relative;
+    z-index: 2;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-14px); }
+  }
+
+  .hero-floating-chip {
+    position: absolute;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 0.7rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--fg);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    white-space: nowrap;
+  }
+
+  .chip-1 { top: 20px; left: -30px; animation: chipfloat1 5s ease-in-out infinite; }
+  .chip-2 { bottom: 50px; right: -20px; animation: chipfloat2 4.5s ease-in-out infinite; }
+  .chip-3 { bottom: -10px; left: 10px; animation: chipfloat1 6s ease-in-out infinite 1s; }
+
+  @keyframes chipfloat1 {
+    0%, 100% { transform: translateY(0) rotate(-2deg); }
+    50% { transform: translateY(-8px) rotate(2deg); }
+  }
+
+  @keyframes chipfloat2 {
+    0%, 100% { transform: translateY(0) rotate(1deg); }
+    50% { transform: translateY(-10px) rotate(-1deg); }
+  }
+
+  /* ── Section Styles ── */
+  section {
+    padding: 6rem 2rem;
+  }
+
+  .section-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .section-title {
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    font-weight: bold;
+    color: var(--fg);
+    line-height: 1.25;
+    margin-bottom: 1.2rem;
+  }
+
+  .section-subtitle {
+    font-size: 1.1rem;
+    color: var(--fg-muted);
+    font-family: sans-serif;
+    max-width: 560px;
+    line-height: 1.75;
+  }
+
+  .section-header-center {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .section-header-center .section-subtitle {
+    margin: 0 auto;
+  }
+
+  /* ── How It Works ── */
+  .how-section {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    position: relative;
+  }
+
+  .steps-grid::before {
+    content: '';
+    position: absolute;
+    top: 52px;
+    left: calc(12.5% + 26px);
+    right: calc(12.5% + 26px);
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-light), var(--accent), var(--accent-light));
+    opacity: 0.35;
+    z-index: 0;
+  }
+
+  .step-card {
+    text-align: center;
+    padding: 2rem 1.2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .step-number-ring {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--gold-gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.4rem;
+    font-size: 1.6rem;
+    box-shadow: 0 4px 16px rgba(200,134,26,0.35);
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+
+  .step-card:hover .step-number-ring {
+    transform: scale(1.1);
+    box-shadow: 0 8px 24px rgba(200,134,26,0.45);
+  }
+
+  .step-card h3 {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: var(--fg);
+    margin-bottom: 0.6rem;
+  }
+
+  .step-card p {
+    font-family: sans-serif;
+    font-size: 0.9rem;
+    color: var(--fg-muted);
+    line-height: 1.65;
+  }
+
+  /* ── Features ── */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.8rem;
+    margin-top: 3.5rem;
+  }
+
+  .feature-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2rem 1.8rem;
+    transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--gold-gradient);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+
+  .feature-card:hover::before { transform: scaleX(1); }
+
+  .feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 40px rgba(200,134,26,0.12);
+    border-color: rgba(200,134,26,0.3);
+  }
+
+  .feature-icon {
+    font-size: 2.4rem;
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+
+  .feature-card h3 {
+    font-size: 1.15rem;
+    font-weight: bold;
+    margin-bottom: 0.7rem;
+    color: var(--fg);
+  }
+
+  .feature-card p {
+    font-family: sans-serif;
+    font-size: 0.92rem;
+    color: var(--fg-muted);
+    line-height: 1.7;
+  }
+
+  /* ── Flavors ── */
+  .flavors-section {
+    background: var(--warm-gradient);
+  }
+
+  .flavors-track-wrapper {
+    overflow: hidden;
+    margin-top: 3rem;
+    position: relative;
+  }
+
+  .flavors-track-wrapper::before,
+  .flavors-track-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 80px;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .flavors-track-wrapper::before {
+    left: 0;
+    background: linear-gradient(90deg, var(--bg), transparent);
+  }
+
+  .flavors-track-wrapper::after {
+    right: 0;
+    background: linear-gradient(-90deg, var(--bg), transparent);
+  }
+
+  .flavors-track {
+    display: flex;
+    gap: 1.4rem;
+    animation: scrollFlavors 30s linear infinite;
+    width: max-content;
+  }
+
+  .flavors-track:hover { animation-play-state: paused; }
+
+  @keyframes scrollFlavors {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .flavor-tile {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.8rem 1.6rem;
+    min-width: 200px;
+    text-align: center;
+    flex-shrink: 0;
+    cursor: default;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .flavor-tile:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 28px rgba(200,134,26,0.15);
+  }
+
+  .flavor-emoji { font-size: 2.8rem; display: block; margin-bottom: 0.8rem; }
+
+  .flavor-name {
+    font-weight: bold;
+    font-size: 0.95rem;
+    color: var(--fg);
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+  .flavor-tag {
+    font-family: sans-serif;
+    font-size: 0.76rem;
+    color: var(--accent);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .flavors-cta {
+    text-align: center;
+    margin-top: 2.5rem;
+  }
+
+  /* ── Testimonials ── */
+  .testimonials-section {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.8rem;
+    margin-top: 3.5rem;
+  }
+
+  .testimonial-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2rem 1.8rem;
+    position: relative;
+  }
+
+  .testimonial-card::before {
+    content: '"';
+    position: absolute;
+    top: 1rem; right: 1.4rem;
+    font-size: 4rem;
+    color: var(--accent-light);
+    font-family: Georgia, serif;
+    line-height: 1;
+    opacity: 0.5;
+  }
+
+  .stars {
+    color: var(--accent);
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .testimonial-text {
+    font-size: 0.97rem;
+    color: var(--fg);
+    line-height: 1.75;
+    margin-bottom: 1.4rem;
+    font-style: italic;
+  }
+
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .author-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--gold-gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+    flex-shrink: 0;
+  }
+
+  .author-name {
+    font-family: sans-serif;
+    font-weight: 700;
+    font-size: 0.88rem;
+    color: var(--fg);
+    display: block;
+  }
+
+  .author-location {
+    font-family: sans-serif;
+    font-size: 0.8rem;
+    color: var(--fg-muted);
+  }
+
+  /* ── Pricing ── */
+  .pricing-section {
+    background: var(--bg);
+  }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.8rem;
+    margin-top: 3.5rem;
+    align-items: start;
+  }
+
+  .pricing-card {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2.4rem 2rem;
+    position: relative;
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+
+  .pricing-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 44px rgba(0,0,0,0.07);
+  }
+
+  .pricing-card.featured {
+    border-color: var(--accent);
+    background: linear-gradient(160deg, #fffbf2, #fff9ed);
+    box-shadow: 0 12px 40px rgba(200,134,26,0.18);
+    transform: scale(1.03);
+  }
+
+  .pricing-card.featured:hover {
+    transform: scale(1.03) translateY(-4px);
+  }
+
+  .popular-badge {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--gold-gradient);
+    color: #fff;
+    font-family: sans-serif;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.35rem 1.2rem;
+    border-radius: 50px;
+    box-shadow: 0 3px 12px rgba(200,134,26,0.4);
+    white-space: nowrap;
+  }
+
+  .plan-name {
+    font-family: sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.8rem;
+  }
+
+  .plan-price {
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--fg);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+
+  .plan-price sup {
+    font-size: 1.4rem;
+    vertical-align: super;
+    font-weight: 700;
+  }
+
+  .plan-period {
+    font-family: sans-serif;
+    font-size: 0.88rem;
+    color: var(--fg-muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .plan-savings {
+    font-family: sans-serif;
+    font-size: 0.82rem;
+    color: #2e7d32;
+    font-weight: 600;
+    background: #e8f5e9;
+    display: inline-block;
+    padding: 0.2rem 0.7rem;
+    border-radius: 50px;
+    margin-bottom: 1.6rem;
+  }
+
+  .plan-divider {
+    height: 1px;
+    background: var(--border);
+    margin-bottom: 1.6rem;
+  }
+
+  .plan-features {
+    list-style: none;
+    margin-bottom: 2rem;
+  }
+
+  .plan-features li {
+    font-family: sans-serif;
+    font-size: 0.9rem;
+    color: var(--fg-muted);
+    padding: 0.45rem 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    line-height: 1.5;
+  }
+
+  .plan-features li::before {
+    content: '✓';
+    color: var(--accent);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 0.05rem;
+  }
+
+  .plan-btn {
+    width: 100%;
+    padding: 0.9rem;
+    border-radius: 50px;
+    font-family: sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+  }
+
+  .plan-btn-primary {
+    background: var(--gold-gradient);
+    color: #fff;
+    border: none;
+    box-shadow: 0 4px 16px rgba(200,134,26,0.35);
+  }
+
+  .plan-btn-primary:hover {
+    box-shadow: 0 8px 24px rgba(200,134,26,0.5);
+    transform: translateY(-2px);
+  }
+
+  .plan-btn-secondary {
+    background: transparent;
+    color: var(--accent-dark);
+    border: 2px solid var(--accent);
+  }
+
+  .plan-btn-secondary:hover {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  .pricing-note {
+    text-align: center;
+    margin-top: 2.5rem;
+    font-family: sans-serif;
+    font-size: 0.88rem;
+    color: var(--fg-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  /* ── Newsletter Banner ── */
+  .newsletter-section {
+    background: var(--gold-gradient);
+    padding: 4rem 2rem;
+  }
+
+  .newsletter-inner {
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .newsletter-inner h2 {
+    font-size: 2rem;
+    color: #fff;
+    margin-bottom: 0.8rem;
+  }
+
+  .newsletter-inner p {
+    font-family: sans-serif;
+    color: rgba(255,255,255,0.88);
+    margin-bottom: 2rem;
+    font-size: 1rem;
+  }
+
+  .newsletter-form {
+    display: flex;
+    gap: 0.8rem;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .newsletter-input {
+    flex: 1;
+    padding: 0.85rem 1.4rem;
+    border: none;
+    border-radius: 50px;
+    font-family: sans-serif;
+    font-size: 0.95rem;
+    outline: none;
+    box-shadow: inset 0 2px 6px rgba(0,0,0,0.08);
+  }
+
+  .newsletter-btn {
+    background: var(--fg);
+    color: #fff;
+    border: none;
+    padding: 0.85rem 1.8rem;
+    border-radius: 50px;
+    font-family: sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: transform 0.18s, background 0.18s;
+  }
+
+  .newsletter-btn:hover {
+    background: var(--fg-muted);
+    transform: scale(1.04);
+  }
+
+  /* ── Footer ── */
+  footer {
+    background: var(--fg);
+    color: rgba(255,255,255,0.75);
+    padding: 4rem 2rem 2rem;
+  }
+
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+
+  .footer-brand p {
+    font-family: sans-serif;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    margin-top: 1rem;
+    color: rgba(255,255,255,0.6);
+    max-width: 280px;
+  }
+
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .footer-logo-mark {
+    width: 34px; height: 34px;
+    background: var(--gold-gradient);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+  }
+
+  .footer-logo-text {
+    font-size: 1.15rem;
+    font-weight: bold;
+    color: #fff;
+  }
+
+  .footer-col h4 {
+    font-family: sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 1.2rem;
+  }
+
+  .footer-col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .footer-col ul a {
+    font-family: sans-serif;
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.55);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-col ul a:hover { color: var(--accent-light); }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: gap;
+    gap: 1rem;
+    font-family: sans-serif;
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.4);
+  }
+
+  .footer-socials {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .social-link {
+    width: 34px; height: 34px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .social-link:hover {
+    background: rgba(245,200,66,0.25);
+    transform: translateY(-2px);
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 1024px) {
+    .hero-inner { grid-template-columns: 1fr; gap: 3rem; text-align: center; }
+    .hero-subheadline { margin: 0 auto 2.4rem; }
+    .hero-actions { justify-content: center; }
+    .hero-trust { justify-content: center; }
+    .hero-visual { display: none; }
+    .steps-grid { grid-template-columns: repeat(2, 1fr); }
+    .steps-grid::before { display: none; }
+    .features-grid { grid-template-columns: repeat(2, 1fr); }
+    .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+    .pricing-grid { grid-template-columns: 1fr; max-width: 420px; margin-left: auto; margin-right: auto; }
+    .pricing-card.featured { transform: scale(1); }
+    .pricing-card.featured:hover { transform: translateY(-4px); }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 640px) {
+    nav { padding: 0 1rem; }
+    .nav-links { display: none; }
+    .steps-grid { grid-template-columns: 1fr 1fr; }
+    .features-grid { grid-template-columns: 1fr; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .newsletter-form { flex-direction: column; }
+    .newsletter-btn { border-radius: 50px; }
+    .footer-top { grid-template-columns: 1fr; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+    section { padding: 4rem 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-mark">🌾</div>
+    <span class="nav-logo-text">Golden<span> Batch</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#flavors">Flavors</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+  </ul>
+  <a href="#pricing" class="nav-cta">Start Subscribing</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero-section">
+  <div class="grain-texture"></div>
+  <div class="hero-bg-circle hero-bg-circle-1"></div>
+  <div class="hero-bg-circle hero-bg-circle-2"></div>
+
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span>🌟</span>
+        Small-Batch · Artisan · Always Fresh
+      </div>
+      <h1 class="hero-headline">
+        Morning Magic,<br>
+        <span class="gold">Delivered Monthly</span>
+      </h1>
+      <p class="hero-subheadline">
+        Golden Batch crafts bold, small-batch granola from real whole ingredients — then ships it straight to your door before the flavor has even settled. Every batch, a new ritual.
+      </p>
+      <div class="hero-actions">
+        <a href="#pricing" class="btn-gold">Choose Your Plan</a>
+        <a href="#flavors" class="btn-outline">Explore Flavors</a>
+      </div>
+      <div class="hero-trust">
+        <div class="trust-item">
+          <span class="trust-icon">✦</span>
+          No artificial anything
+        </div>
+        <div class="trust-item">
+          <span class="trust-icon">✦</span>
+          Pause anytime
+        </div>
+        <div class="trust-item">
+          <span class="trust-icon">✦</span>
+          Baked to order
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-bowl">🥣</div>
+      <div class="hero-floating-chip chip-1">
+        <span>🌰</span> Honey Pecan Crunch
+      </div>
+      <div class="hero-floating-chip chip-2">
+        <span>⭐</span> 4.9 avg rating
+      </div>
+      <div class="hero-floating-chip chip-3">
+        <span>📦</span> Ships fresh weekly
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="how">
+  <div class="section-inner">
+    <div class="section-header-center">
+      <span class="section-label">How It Works</span>
+      <h2 class="section-title">From Our Oven to Your Bowl</h2>
+      <p class="section-subtitle">We keep it refreshingly simple. Four steps to the best granola of your life.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-number-ring">🎛️</div>
+        <h3>Pick Your Plan</h3>
+        <p>Choose how much granola you want and how often — weekly, biweekly, or monthly deliveries.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number-ring">🎨</div>
+        <h3>Curate Your Mix</h3>
+        <p>Select from rotating seasonal flavors or let our bakers surprise you with something new each batch.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number-ring">🔥</div>
+        <h3>We Bake Fresh</h3>
+        <p>Your granola is baked to order in small batches — never sitting in a warehouse or on a shelf.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number-ring">📬</div>
+        <h3>Enjoy the Ritual</h3>
+        <p>It arrives at your door ready to pour. Upgrade your mornings with something genuinely made with care.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section>
+  <div class="section-inner">
+    <div class="section-header-center">
+      <span class="section-label">Why Golden Batch</span>
+      <h2 class="section-title">Granola Taken Seriously</h2>
+      <p class="section-subtitle">We obsess over every ingredient and every roast time so you don't have to think twice about breakfast.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <span class="feature-icon">🌾</span>
+        <h3>Whole-Food Ingredients</h3>
+        <p>Rolled oats, raw nuts, real honey, and cold-pressed oils. No mystery powders, no corn syrup, no "natural flavors" covering up shortcuts.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🧑‍🍳</span>
+        <h3>Baked to Order</h3>
+        <p>Every bag is baked after you order — not months in advance. That means peak crunch, peak flavor, peak freshness every single time.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🔄</span>
+        <h3>Rotating Seasonal Flavors</h3>
+        <p>Our bakers craft new flavors every season inspired by local harvests. Your subscription always brings something to look forward to.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🎁</span>
+        <h3>Fully Customizable</h3>
+        <p>Mix and match flavors, set your bag sizes, choose your cadence. Your subscription bends to your life — not the other way around.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🌱</span>
+        <h3>Thoughtfully Sourced</h3>
+        <p>We partner with small-scale farms and ethical suppliers who share our respect for quality ingredients and sustainable practices.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🔓</span>
+        <h3>No Strings Attached</h3>
+        <p>Pause, skip, or cancel anytime from your dashboard — no phone calls, no hoops. Because good granola shouldn't come with bad policies.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FLAVORS -->
+<section class="flavors-section" id="flavors">
+  <div class="section-inner">
+    <div class="section-header-center">
+      <span class="section-label">Current Lineup</span>
+      <h2 class="section-title">Flavors Worth Waking Up For</h2>
+      <p class="section-subtitle">A curated roster of bold, crave-worthy granolas — from toasty classics to adventurous new drops.</p>
+    </div>
+  </div>
+
+  <div class="flavors-track-wrapper">
+    <div class="flavors-track">
+      <!-- First set -->
+      <div class="flavor-tile">
+        <span class="flavor-emoji">🍯</span>
+        <span class="flavor-name">Golden Honey Almond</span>
+        <span class="flavor-tag">Bestseller</span>
+      </div>
+      <div class="flavor-tile">
+        <span class="flavor-emoji">🍫</span>
+        <span class="flavor-name">Dark Chocolate Sea Salt</span>
+        <span class="flavor-tag">New Batch</span>
+      </div>
+      <div class="flavor-tile">
+        <span class="flavor-emoji">🫐</span>
+        <span class="flavor-name">Wild Blueberry Coconut</span>
+        <span class="flavor-tag">Seasonal</span>
+      </div>
+      <div class="flavor-tile">
+        <span class="flavor-emoji">🌰</span>
+        <span class="flavor-name">Pecan Maple Crisp</span>
+        <span class="flavor-tag">Fan Fave</span>
+      </div>
+      <div class="flavor-tile">
+        <span class="flavor-emoji">🍎</span>
+        <span class="flavor-name">Apple Cinnamon Harvest</span>
+        <span class="flavor-tag">Seasonal</span>
+      </div>
+      <div class="flavor-tile">
+        <span class="flavor-emoji">🥥</span>
+        <span class="flavor-name">Toasted Coconut Cashew</span>
+        <span class="flavor-tag">Classic</span>
+      </div>
+      <div class="flavor-tile">
+        <span class="flavor-emoji">🫚</span>
+        <span class="flavor-name">Olive Oil & Rosemary</span>
+        <span class="flavor-tag">Savory</span>
+      </div>
+      <div class="flavor-tile">
+        <span class="flavor-emoji">☕</span>
+        <span class="flavor-name">Espresso Walnut Crunch</span>
+        <span class="flavor-tag">Limited</span>
+      </div>
+      <!-- Duplicate for seamless loop -->
+      <div class="flavor-tile">
+        <span class="flavor-emoji">🍯</span>
+        <span class="flavor-name">Golden Honey Almond</span>
+        <span class="flavor-tag">Bestseller</span>
+      </div>
+      <div class="flavor-tile">
+        <span class="flavor-emoji">🍫</span>
+        <span class="flavor-name">Dark Chocolate Sea Salt</span>
+        <span class="flavor-tag">New Batch</span>
+      </div>
+      <div class="flavor-tile">
+        <span class="flavor-emoji">🫐</span>
+        <span class="flavor-name">Wild Blueberry Coconut</span>
+        <span class="flavor-tag">Seasonal</span>
+      </div>
+      <div class="flavor-tile">
+        <span class="flavor-emoji">🌰</span>
+        <span class="flavor-name">Pecan Maple Crisp</span>
+        <span class="flavor-tag">Fan Fave</span>
+      </div>
+      <div class="flavor-tile">
+        <span class="flavor-emoji">🍎</span>
+        <span class="flavor-name">Apple Cinnamon Harvest</span>
+        <span class="flavor-tag">Seasonal</span>
+      </div>
+      <div class="flavor-tile">
+        <span class="flavor-emoji">🥥</span>
+        <span class="flavor-name">Toasted Coconut Cashew</span>
+        <span class="flavor-tag">Classic</span>
+      </div>
+      <div class="flavor-tile">
+        <span class="flavor-emoji">🫚</span>
+        <span class="flavor-name">Olive Oil & Rosemary</span>
+        <span class="flavor-tag">Savory</span>
+      </div>
+      <div class="flavor-tile">
+        <span class="flavor-emoji">☕</span>
+        <span class="flavor-name">Espresso Walnut Crunch</span>
+        <span class="flavor-tag">Limited</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-inner">
+    <div class="flavors-cta">
+      <a href="#pricing" class="btn-gold">Get All the Flavors</a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section" id="reviews">
+  <div class="section-inner">
+    <div class="section-header-center">
+      <span class="section-label">Real Reviews</span>
+      <h2 class="section-title">Mornings Transformed</h2>
+      <p class="section-subtitle">Don't take our word for it — here's what subscribers are saying.</p>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <span class="stars">★★★★★</span>
+        <p class="testimonial-text">"I've tried every granola subscription on the market. Golden Batch is the only one I've kept for over a year. The freshness is simply incomparable — you can taste the difference immediately."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">M</div>
+          <div>
+            <span class="author-name">Mara Lindquist</span>
+            <span class="author-location">Portland, OR</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <span class="stars">★★★★★</span>
+        <p class="testimonial-text">"The Pecan Maple Crisp is life-changing. I canceled my gym membership and just eat granola now — partly joking, mostly not. Also customer support is genuinely lovely."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">D</div>
+          <div>
+            <span class="author-name">DeShawn Okafor</span>
+            <span class="author-location">Austin, TX</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <span class="stars">★★★★★</span>
+        <p class="testimonial-text">"I gift the Gifter plan to my mom every month. She calls me every time it arrives. It's become our little ritual, and the rotating flavors keep it exciting every single time."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">P</div>
+          <div>
+            <span class="author-name">Priya Shankar</span>
+            <span class="author-location">Chicago, IL</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing-section" id="pricing">
+  <div class="section-inner">
+    <div class="section-header-center">
+      <span class="section-label">Subscription Plans</span>
+      <h2 class="section-title">Pick Your Batch Size</h2>
+      <p class="section-subtitle">All plans include free shipping, fresh-baked batches, and the freedom to pause anytime.</p>
+    </div>
+
+    <div class="pricing-grid">
+      <!-- Solo -->
+      <div class="pricing-card">
+        <div class="plan-name">The Solo</div>
+        <div class="plan-price"><sup>$</sup>19</div>
+        <div class="plan-period">per month</div>
+        <div class="plan-savings">Save 10% vs. one-time</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li>1 lb bag per month</li>
+          <li>Choose 1 flavor</li>
+          <li>Free standard shipping</li>
+          <li>Pause or skip anytime</li>
+          <li>Subscriber-only flavors access</li>
+        </ul>
+        <a href="#" class="plan-btn plan-btn-secondary">Get Started</a>
+      </div>
+
+      <!-- Duo — Featured -->
+      <div class="pricing-card featured">
+        <div class="popular-badge">🌟 Most Popular</div>
+        <div class="plan-name">The Duo</div>
+        <div class="plan-price"><sup>$</sup>34</div>
+        <div class="plan-period">per month</div>
+        <div class="plan-savings">Save 15% vs. one-time</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li>2 lb bag per month</li>
+          <li>Choose up to 3 flavors</li>
+          <li>Free priority shipping</li>
+          <li>Pause, skip, or swap anytime</li>
+          <li>Early access to new flavors</li>
+          <li>Handwritten batch notes included</li>
+        </ul>
+        <a href="#" class="plan-btn plan-btn-primary">Get Started</a>
+      </div>
+
+      <!-- Gifter -->
+      <div class="pricing-card">
+        <div class="plan-name">The Gifter</div>
+        <div class="plan-price"><sup>$</sup>54</div>
+        <div class="plan-period">per month</div>
+        <div class="plan-savings">Save 20% vs. one-time</div>
+        <div class="plan-divider"></div>
+        <ul class="plan-features">
+          <li>4 lb bag (or split shipments)</li>
+          <li>Full flavor selection unlocked</li>
+          <li>Free express shipping</li>
+          <li>Gift packaging option</li>
+          <li>Exclusive member-only batches</li>
+          <li>Quarterly Bakers' Selection box</li>
+        </ul>
+        <a href="#" class="plan-btn plan-btn-secondary">Get Started</a>
+      </div>
+    </div>
+
+    <p class="pricing-note">
+      <span>🔒</span>
+      Cancel anytime, no fees, no questions asked. All payments are processed securely.
+    </p>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter-section">
+  <div class="newsletter-inner">
+    <h2>First Batch, On Us 🎉</h2>
+    <p>Join the Golden Batch community and get 15% off your first order, plus early access to seasonal drops and limited-edition flavors.</p>
+    <form class="newsletter-form" onsubmit="handleNewsletterSubmit(event)">
+      <input class="newsletter-input" type="email" placeholder="your@email.com" required aria-label="Email address">
+      <button class="newsletter-btn" type="submit">Claim Offer</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <div class="footer-logo-mark">🌾</div>
+          <span class="footer-logo-text">Golden Batch</span>
+        </div>
+        <p>Small-batch granola, made with real ingredients and shipped to you fresh. Every bag, a little ritual. Every morning, a little better.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Subscribe</h4>
+        <ul>
+          <li><a href="#">The Solo Plan</a></li>
+          <li><a href="#">The Duo Plan</a></li>
+          <li><a href="#">The Gifter Plan</a></li>
+          <li><a href="#">Gift Cards</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="#">All Flavors</a></li>
+          <li><a href="#">Seasonal Drops</a></li>
+          <li><a href="#">Our Story</a></li>
+          <li><a href="#">The Blog</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#">Manage Subscription</a></li>
+          <li><a href="#">Shipping Info</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2025 Golden Batch. All rights reserved. Made with 🍯 and a lot of oats.</span>
+      <div class="footer-socials">
+        <a href="#" class="social-link" aria-label="Instagram">📸</a>
+        <a href="#" class="social-link" aria-label="TikTok">🎵</a>
+        <a href="#" class="social-link" aria-label="Pinterest">📌</a>
+        <a href="#" class="social-link" aria-label="Facebook">💬</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // Nav background enhancement on scroll
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) {
+      nav.style.boxShadow = '0 4px 24px rgba(0,0,0,0.08)';
+    } else {
+      nav.style.boxShadow = 'none';
+    }
+  });
+
+  // Card hover depth — subtle tilt
+  document.querySelectorAll('.feature-card, .pricing-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const rect = card.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      if (!card.classList.contains('featured')) {
+        card.style.transform = `translateY(-5px) rotateX(${-y * 4}deg) rotateY(${x * 4}deg)`;
+      }
+    });
+    card.addEventListener('mouseleave', () => {
+      if (!card.classList.contains('featured')) {
+        card.style.transform = '';
+      }
+    });
+  });
+
+  // Newsletter form submit handler
+  function handleNewsletterSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    const input = e.target.querySelector('input');
+    btn.textContent = '🎉 You're in!';
+    btn.disabled = true;
+    input.disabled = true;
+    btn.style.background = '#2e7d32';
+    setTimeout(() => {
+      btn.textContent = 'Claim Offer';
+      btn.disabled = false;
+      input.disabled = false;
+      input.value = '';
+      btn.style.background = '';
+    }, 4000);
+  }
+
+  // Scroll-reveal enhancement for feature and pricing cards (enhances, doesn't hide)
+  const revealEls = document.querySelectorAll('.feature-card, .testimonial-card, .step-card, .pricing-card');
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = entry.target.classList.contains('featured')
+            ? 'scale(1.03)'
+            : '';
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    revealEls.forEach((el, i) => {
+      el.style.transition = `opacity 0.5s ease ${i * 0.06}s, transform 0.5s ease ${i * 0.06}s, box-shadow 0.25s`;
+      observer.observe(el);
+    });
+  }
+</script>
+</body>
+</html>
