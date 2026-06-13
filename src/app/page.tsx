@@ -1,5 +1,6 @@
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/sections/Hero';
+import AboutRoasting from '@/components/sections/AboutRoasting';
 import SeasonalMarquee from '@/components/sections/SeasonalMarquee';
 import ProductFeature from '@/components/sections/ProductFeature';
 import ProcessCards from '@/components/sections/ProcessCards';
@@ -16,6 +17,7 @@ export default function HomePage() {
       <Navbar />
       <main>
         <Hero />
+        <AboutRoasting />
         <SeasonalMarquee />
         <ProductFeature />
         <ProcessCards />
